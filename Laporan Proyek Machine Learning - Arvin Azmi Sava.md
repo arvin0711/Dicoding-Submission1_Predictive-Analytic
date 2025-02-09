@@ -33,9 +33,25 @@ Dataset yang digunakan dalam proyek ini diperoleh dari Kaggle dengan url https:/
 
 ## Data Preparation
 - Deteksi Outlier
+  ![image](https://github.com/user-attachments/assets/be12abff-9cc9-4441-b461-94ef576e0954)
+
 - Pembagian Data Latih dan Uji
 - Normalisasi
+
+Normalisasi adalah proses mengubah nilai-nilai dari suatu dataset ke dalam rentang nilai tertentu. Tujuan utama normalisasi adalah untuk menghasilkan data yang konsisten sehingga setiap variabel memiliki pangaruh yang seimbang terhadap model yang dibangun [28]. Selain itu, normalisasi juga akan mengurangi bias yang mungkin terjadi akibat perbedaan skala antar variabel. Dengan demikian, normalisasi sangat penting dalam pembuatan model karena dapat menghasilkan model yang lebih stabil dan akurat. Hasil normalisasi pada variabel fitur ditunjukkan pada gambar di bawah ini
+
+![image](https://github.com/user-attachments/assets/a18ac943-5bc1-494e-99c6-af4881f5eddc)
+
+Sementara itu, untuk hasil normalisasi variabel target ditunjukkan gambar di bawah ini
+
+![image](https://github.com/user-attachments/assets/b553097d-c425-49df-8ae9-cc2d1b7a8806)
+
+
 - Pembuatan Urutan Data Baru
+
+Setelah melakukan normalisasi data, tahap berikutnya adalah pembuatan urutan data baru menjadi ukuran 3 dimensi (samples, timesteps, jumlah fitur) agar sesuai dengan input yang diperlukan oleh model biLSTM. Timesteps digunakan untuk menentukan jumlah data masa lalu yang diperhitungkan dalam memprediksi satu nilai di masa depan. Pada tahap ini timesteps yang digunakan adalah 9 sehingga setiap prediksi di masa depan mempertimbangkan 9data di masa lalu. Pada Gambar di bawah ini ditunjukkan bahwa ukuran data latih dan data uji sudah berubah menjadi ukuran 3 dimensi.
+
+![image](https://github.com/user-attachments/assets/a50c404a-4a97-4c35-bb27-fcc4e3c3b660)
 
 ## Modeling
 Pada proyek ini menggunakan dua model deep learning yaitu Bidirectional LSTM dan Bidirectional Gater Reccurrent Unit.
@@ -67,18 +83,58 @@ evaluasi kinerja model. Hal ini bertujuan untuk menillai seberapa akurat model y
 dibuat dalam memprediksi data. Berikut ini beberapa metrik evaluasi kinerja yang digunakan 
 untuk menilai seberapa baik peramalan yang dihasilkan:
 1. Mean Square Error (MSE)
- Mean Square Error (MSE) merupakan salah satu metrik evaluasi yang umum 
+
+Mean Square Error (MSE) merupakan salah satu metrik evaluasi yang umum 
 digunakan untuk mengukur seberapa baik model memprediksi nilai tertentu. MSE didapatkan 
 dengan cara mengukur hasil akar dari rata-rata perbedaan kuadrat antara nilai aktual (y) dan 
 nilai hasil prediksi (y). Rumus MSE dapat dinyatakan sebagai berikut:
-$$
-RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_i - f_i)^2}
-$$
 
+   $$
+   MSE = \frac{1}{n} \sum_{i=1}^{n} (x_i - f_i)^2
+   $$
+
+Di mana
+
+n = Jumlah data
+
+xi= Nilai prediksi pada periode ke-i 
+
+fi = Nilai actual indeks pada periode ke-i
 
 2. Mean Absolute Percentage Error (SMAPE)
+
+Mean Absolute Percentage Error (MAPE) merupakan salah satu metrik evaluasi yang umum digunakan untuk mengukur seberapa baik model memprediksi nilai tertentu.  
+MAPE didapatkan dengan cara menghitung rata-rata persentase kesalahan absolut antara nilai aktual (x) dan nilai hasil prediksi (f).  
+Rumus MAPE dapat dinyatakan sebagai berikut:
+
+$$
+MAPE = \frac{1}{n} \sum_{i=1}^{n} \left| \frac{x_i - f_i}{x_i} \right| \times 100\%
+$$
+
+Di mana
+
+n = jumlah data
+
+xi = Nilai Aktual Indeks pada periode ke-i 
+
+fi= Nilai Prediksi Indeks pada periode ke-i
+
+
 3. Mean Absolute Error (MAE)
-4. 
+   
+Mean Absolute Error (MAE) merupakan rata-rata perbedaan antara nilai data aktual dan nilai prediksi dari model. Secara umum rumus matematis MAE dapat dinyatakan sebagai berikut:
+
+$$
+MAE = \frac{1}{n} \sum_{i=1}^{n} |x_i - f_i|
+$$
+
+Di mana
+
+n = jumlah data
+
+xi = Nilai Aktual Indeks pada periode ke-i 
+
+fi= Nilai Prediksi Indeks pada periode ke-i
 
 
 
