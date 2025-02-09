@@ -2,7 +2,7 @@
 ## Domain Proyek
 Peramalan harga saham merupakan salah satu tantangan dalam dunia keuangan yang memiliki dampak signifikan bagi investor dan institusi keuangan. Dengan volatilitas yang tinggi, kemampuan untuk memprediksi harga saham di masa depan dapat memberikan keuntungan kompetitif dalam pengambilan keputusan investasi.
 
-Peramalan harga saham penting karena membantu investor dan institusi keuangan dalam mengambil keputusan yang lebih baik. Dengan prediksi yang akurat, risiko kerugian dapat dikurangi, dan peluang keuntungan bisa dimaksimalkan. Selain itu, model prediksi yang baik dapat mempercepat dan meningkatkan efisiensi perdagangan saham. Perkembangan teknologi memungkinkan penggunaan machine learning untuk memahami pola dalam data saham yang sulit dilihat secara langsung. Oleh karena itu, pengembangan model yang lebih akurat sangat diperlukan agar keputusan investasi lebih optimal.
+Peramalan harga saham penting karena membantu investor dan institusi keuangan dalam mengambil keputusan yang lebih baik [3]. Dengan prediksi yang akurat, risiko kerugian dapat dikurangi, dan peluang keuntungan bisa dimaksimalkan. Selain itu, model prediksi yang baik dapat mempercepat dan meningkatkan efisiensi perdagangan saham. Perkembangan teknologi memungkinkan penggunaan machine learning untuk memahami pola dalam data saham yang sulit dilihat secara langsung. Oleh karena itu, pengembangan model yang lebih akurat sangat diperlukan agar keputusan investasi lebih optimal.
 
 ## Business Understanding
 ### Problem Statements
@@ -14,10 +14,12 @@ Peramalan harga saham penting karena membantu investor dan institusi keuangan da
 2. Membandingkan performa BiLSTM dan BiGRU menggunakan metrik evaluasi yang sesuai.
 3. Mengidentifikasi fitur yang paling berpengaruh dalam peramalan harga saham.
 ### Solution Statements
+1. Menggunakan Bidirectional Long Short-Term Memory (BiLSTM) dan Bidirectional Gated Recurrent Unit (BiGRU) sebagai model deep learning untuk menangkap pola dalam data time series harga saham.
+2. Melakukan hyperparameter tuning untuk meningkatkan akurasi model dengan menyesuaikan jumlah unit, dropout rate, dan optimizer.
 
 
 ## Data Understanding
-Dataset yang digunakan dalam proyek ini diperoleh dari Kaggle dengan url https://www.kaggle.com/datasets/rpaguirre/tesla-stock-price/data
+Dataset yang digunakan dalam proyek ini merupakan dataset harga saham harian Tesla yang mencakup periode tertentu dari periode 06/29/2010 hingga 03/17/2017. Dataset ini diperoleh dari Kaggle melalui tautan berikut: https://www.kaggle.com/datasets/rpaguirre/tesla-stock-price/data
 
 ### Variabel dalam dataset:
 - Date - Tanggal pencatatan harga saham.
@@ -29,16 +31,32 @@ Dataset yang digunakan dalam proyek ini diperoleh dari Kaggle dengan url https:/
 - Volume - Jumlah saham yang diperdagangkan dalam satu hari.
 ### Exploratory Data Analysis (EDA)
 - Plot harga saham historis untuk melihat tren.
+
+![image](https://github.com/user-attachments/assets/71545ac0-de14-46c2-932b-1aa6f8c5b51c) ![image](https://github.com/user-attachments/assets/5652cc40-36da-40ec-9c3b-9b171efaddc2)
+
+
 - Uji korelasi antara variabel-variabel dalam dataset.
 
+![image](https://github.com/user-attachments/assets/8d3e50ee-3bec-4966-9c03-7ba572c6a86d)
+
+Berdasarkan uji korelasi yang ditunjukkan pada gambar di atas. Terdapat beberapa variabel yaitu variabel Open, High, dan Low yang memiliki korelasi sangat kuat dengan variabel target yaitu harga penutupan (Close), sedangkan Volume memiliki korelasi yang lebih rendah dibandingkan variabel lainnya.Meskipun korelasi Volume dengan Close lebih rendah, fitur ini tetap digunakan dalam pemodelan karena volume perdagangan dapat memberikan informasi tambahan mengenai pergerakan harga saham. Hasil uji korelasi ini menunjukkan bahwa fitur Open, High, dan Low berpengaruh besar terhadap prediksi harga saham, sementara Volume memiliki pengaruh yang lebih rendah. Dengan mempertimbangkan semua fitur yang tersedia, model BiLSTM dan BiGRU akan dievaluasi untuk menentukan efektivitasnya dalam meningkatkan akurasi prediksi harga saham.
 ## Data Preparation
 - Deteksi Outlier
   ![image](https://github.com/user-attachments/assets/be12abff-9cc9-4441-b461-94ef576e0954)
 
+  Berdasarkan visualisasi boxplot, terdapat outlier pada variabel Volume. Oleh karena itu, akan dilakukan pengecekan outlier tersebut. Kemudian, berikutnya outlier tersebut akan dihapus / didrop karena jumlahnya tidak begitu banyak sehingga tidak berpengaruh signifikan terhadap dataset yang ada
+
+  ![image](https://github.com/user-attachments/assets/71a5201c-7e43-48c2-b3b4-86e70eec2b5a)
+
+  Penghapusan outliers dilakukan menggunakan metode IQR. Outlier berjumlah 80. Setelah dilakukan penghapusan baris data yang mengandung outliers, saat ini total baris data berjumlah 1612 dari sebelumnya berjumlah 1692 baris.
+
+
 - Pembagian Data Latih dan Uji
+
+Pada tahap ini dilakukan pembagian data menjadi menjadi dua bagian yaitu data latih dan data uji. Pembagian data latih dan data uji ini menggunakan  skenario 80:20. Skenario ini dirancang untuk menguji seberapa baik kemampuan model dalam memprediksi data yang belum pernah dilihat sebelumnya. Setelah pembagian data, dilakukan penentuan variabel fitur dan target. Variabel fitur terdiri dari kolom Open, High, Low, dan Volume, sedangkan variabel targetnya yaitu Close. 
 - Normalisasi
 
-Normalisasi adalah proses mengubah nilai-nilai dari suatu dataset ke dalam rentang nilai tertentu. Tujuan utama normalisasi adalah untuk menghasilkan data yang konsisten sehingga setiap variabel memiliki pangaruh yang seimbang terhadap model yang dibangun [28]. Selain itu, normalisasi juga akan mengurangi bias yang mungkin terjadi akibat perbedaan skala antar variabel. Dengan demikian, normalisasi sangat penting dalam pembuatan model karena dapat menghasilkan model yang lebih stabil dan akurat. Hasil normalisasi pada variabel fitur ditunjukkan pada gambar di bawah ini
+Normalisasi adalah proses mengubah nilai-nilai dari suatu dataset ke dalam rentang nilai tertentu. Tujuan utama normalisasi adalah untuk menghasilkan data yang konsisten sehingga setiap variabel memiliki pangaruh yang seimbang terhadap model yang dibangun [2]. Selain itu, normalisasi juga akan mengurangi bias yang mungkin terjadi akibat perbedaan skala antar variabel. Dengan demikian, normalisasi sangat penting dalam pembuatan model karena dapat menghasilkan model yang lebih stabil dan akurat. Hasil normalisasi pada variabel fitur ditunjukkan pada gambar di bawah ini
 
 ![image](https://github.com/user-attachments/assets/a18ac943-5bc1-494e-99c6-af4881f5eddc)
 
@@ -54,28 +72,26 @@ Setelah melakukan normalisasi data, tahap berikutnya adalah pembuatan urutan dat
 ![image](https://github.com/user-attachments/assets/a50c404a-4a97-4c35-bb27-fcc4e3c3b660)
 
 ## Modeling
-Pada proyek ini menggunakan dua model deep learning yaitu Bidirectional LSTM dan Bidirectional Gater Reccurrent Unit.
+Pada proyek ini, digunakan dua model deep learning, yaitu Bidirectional LSTM (BiLSTM) dan Bidirectional Gated Recurrent Unit (BiGRU), untuk memprediksi harga saham Tesla berdasarkan data historis. Kedua model ini dikembangkan dengan hypertuning untuk mencari kombinasi parameter terbaik yang menghasilkan performa optimal.
+
+Proses hypertuning dilakukan menggunakan Keras Tuner dengan metode Hyperband. Metode Hyperband dipilih karena mampu mengalokasikan sumber daya secara efisien dalam eksplorasi hyperparameter, dengan prinsip early stopping untuk mengeliminasi konfigurasi yang kurang menjanjikan lebih awal. Keuntungan utama metode ini adalah:
+
+- Efisiensi waktu: Mengurangi jumlah eksperimen yang harus dilakukan dibandingkan pencarian grid search atau random search.
+- Seleksi adaptif: Model dengan performa buruk dieliminasi lebih awal, sehingga sumber daya lebih banyak dialokasikan ke model yang lebih menjanjikan.
+- Optimasi yang lebih cepat: Memungkinkan eksplorasi berbagai kombinasi hyperparameter tanpa perlu melatih semua model hingga selesai.
+  
+Setelah mendapatkan parameter terbaik dari hasil tuning, model final kemudian dibangun dan dilatih menggunakan parameter tersebut.
 ### Bidirectional Long Short-Term Memory (BILSTM)
 Model Long Short-Term Memory (LSTM) merupakan pembaruan dari model Recurrent 
 Neural Network (RNN) yang pertama kali diperkenalkan oleh Hochreiter dan Schmidhuber 
 pada tahun 1997.  LSTM didesain untuk menangani persoalan yang muncul pada RNN berupa 
 long term dependency problem [29]. Masalah tersebut menyebabkan RNN akan kehilangan 
 informasi penting yang didapatkan sebelumnya di awal jika urutannya cukup panjang pada saat 
-forward propagation. Bidirectional LSTM adalah varian dari LSTM yang memungkinkan informasi diproses dalam dua arah yaitu arah maju dan mundur. Model ini menggunakan dua lapisan LSTM untuk menangkap konteks sebelumnya dan berikutnya dalam urutan data sehingga meningkatkan pemahaman konteks data [30].
+forward propagation. Bidirectional LSTM adalah varian dari LSTM yang memungkinkan informasi diproses dalam dua arah yaitu arah maju dan mundur. Model ini menggunakan dua lapisan LSTM untuk menangkap konteks sebelumnya dan berikutnya dalam urutan data sehingga meningkatkan pemahaman konteks data [1].
 
 ### Bidirectional Gated Recurrent Unit (BIGRU)
-```sh
-cd dillinger
-npm i
-node app
-```
-
-For production environments...
-
-```sh
-npm install --production
-NODE_ENV=production node app
-```
+GRU diperkenalkan oleh Cho et al. pada tahun 2014 sebagai alternatif yang lebih sederhana dibandingkan Long Short-Term Memory (LSTM) dengan tetap mempertahankan kemampuan menangani dependensi jangka panjang.
+GRU memiliki dua mekanisme utama, yaitu reset gate dan update gate. Reset gate mengontrol seberapa banyak informasi dari langkah sebelumnya yang perlu dilupakan, sedangkan update gate menentukan informasi baru yang akan disimpan dalam memori. Dengan struktur ini, GRU dapat menyesuaikan aliran informasi tanpa menggunakan memori sel seperti pada LSTM sehingga BiGRU sering kali lebih efisien secara komputasi dengan performa yang tetap kompetitif dalam berbagai aplikasi. Bidirectional GRU (BiGRU) adalah varian dari GRU yang memproses informasi dalam dua arah, yaitu maju (forward) dan mundur (backward). BiGRU menggunakan dua lapisan GRU yang berjalan secara paralel untuk menangkap informasi dari konteks sebelumnya maupun berikutnya dalam urutan data. Dengan pendekatan ini, BiGRU lebih efektif dalam memahami hubungan dalam data sekuensial dibandingkan GRU biasa, terutama dalam aplikasi seperti pemrosesan bahasa alami dan analisis deret waktu.
 
 ## Evaluation
 Setelah memperoleh hasil prediksi dari model yang telah dibangun. Perlu dilakukan 
@@ -136,118 +152,37 @@ xi = Nilai Aktual Indeks pada periode ke-i
 
 fi= Nilai Prediksi Indeks pada periode ke-i
 
+4. R-Squared (R²)
+
+R-Squared (R²) atau koefisien determinasi merupakan metrik evaluasi yang digunakan untuk mengukur seberapa baik model dapat menjelaskan variabilitas data aktual. Nilai R² berkisar antara 0 hingga 1, di mana semakin mendekati 1, maka model semakin baik dalam menjelaskan variasi data. Semakin tinggi nilai R², semakin baik model dalam menjelaskan variasi data aktual.
+
+### Hasil Evaluasi Model BiLSTM dan BiGRU
+
+| Metrik      | BiLSTM  | BiGRU  |
+|------------|--------|--------|
+| MSE        | 76.1575 | 69.4211 |
+| MAPE (%)   | 3.2016  | 3.0134  |
+| MAE        | 6.7463  | 6.3869  |
+| R-Squared  | 0.8776  | 0.8884  |
+
+Analisis Hasil Evaluasi:
+
+- MSE (Mean Squared Error): BiGRU memiliki nilai MSE yang lebih rendah dibandingkan BiLSTM, menunjukkan bahwa model ini menghasilkan error yang lebih kecil.
+
+- MAPE (Mean Absolute Percentage Error): BiGRU memiliki MAPE yang lebih rendah, menunjukkan bahwa kesalahan relatif model ini lebih kecil dibandingkan BiLSTM.
+
+- MAE (Mean Absolute Error): BiGRU memiliki MAE yang lebih kecil, yang berarti model ini menghasilkan prediksi yang lebih akurat secara absolut.
+
+- R-Squared (R²): BiGRU memiliki nilai R² lebih tinggi, menunjukkan bahwa model ini lebih mampu menjelaskan variasi dalam data dibandingkan BiLSTM.
+## Kesimpulan
+Berdasarkan hasil evaluasi, model algoritma BiGRU dipilih sebagai model terbaik untuk memprediksi harga saham. Hal ini didasarkan pada metrik evaluasi yang menunjukkan bahwa BiGRU memiliki error yang lebih rendah (MSE, MAE, dan MAPE) serta nilai R² yang lebih tinggi dibandingkan BiLSTM. Selain itu, BiGRU lebih efisien dalam proses pelatihan dibandingkan BiLSTM, sehingga lebih optimal untuk digunakan dalam peramalan harga saham.
+
+## Refrensi
 
 
 
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+[1] A. Graves and J. Schmidhuber, “Framewise phoneme classification with bidirectional LSTM and other neural network architectures,” in Neural Networks, Jul. 2005, pp. 602–610. doi: 10.1016/j.neunet.2005.06.042.
 
-## Development
+[2] J. Han, M. Kamber, and J. Pei, “Data Mining. Concepts and Techniques, 3rd Edition (The Morgan Kaufmann Series in Data Management Systems),” 2011.
 
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantaneously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
-
-```sh
-node app
-```
-
-Second Tab:
-
-```sh
-gulp watch
-```
-
-(optional) Third:
-
-```sh
-karma test
-```
-
-#### Building for source
-
-For production release:
-
-```sh
-gulp build --prod
-```
-
-Generating pre-built zip archives for distribution:
-
-```sh
-gulp build dist --prod
-```
-
-## Docker
-
-Dillinger is very easy to install and deploy in a Docker container.
-
-By default, the Docker will expose port 8080, so change this within the
-Dockerfile if necessary. When ready, simply use the Dockerfile to
-build the image.
-
-```sh
-cd dillinger
-docker build -t <youruser>/dillinger:${package.json.version} .
-```
-
-This will create the dillinger image and pull in the necessary dependencies.
-Be sure to swap out `${package.json.version}` with the actual
-version of Dillinger.
-
-Once done, run the Docker image and map the port to whatever you wish on
-your host. In this example, we simply map port 8000 of the host to
-port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-```sh
-docker run -d -p 8000:8080 --restart=always --cap-add=SYS_ADMIN --name=dillinger <youruser>/dillinger:${package.json.version}
-```
-
-> Note: `--capt-add=SYS-ADMIN` is required for PDF rendering.
-
-Verify the deployment by navigating to your server address in
-your preferred browser.
-
-```sh
-127.0.0.1:8000
-```
-
-## License
-
-MIT
-
-**Free Software, Hell Yeah!**
-
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
-
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
+[3] Patel, J., Shah, S., Thakkar, P., & Kotecha, K. (2015). "Predicting stock and stock price index movement using trend deterministic data preparation and machine learning techniques." Expert Systems with Applications, 42(1), 259-268. https://doi.org/10.1016/j.eswa.2014.08.002
