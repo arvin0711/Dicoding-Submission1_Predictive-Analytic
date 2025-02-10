@@ -5,7 +5,19 @@ Peramalan harga saham merupakan salah satu tantangan dalam dunia keuangan yang m
 Peramalan harga saham penting karena membantu investor dan institusi keuangan dalam mengambil keputusan yang lebih baik [3]. Dengan prediksi yang akurat, risiko kerugian dapat dikurangi, dan peluang keuntungan bisa dimaksimalkan. Selain itu, model prediksi yang baik dapat mempercepat dan meningkatkan efisiensi perdagangan saham. Perkembangan teknologi memungkinkan penggunaan machine learning untuk memahami pola dalam data saham yang sulit dilihat secara langsung. Oleh karena itu, pengembangan model yang lebih akurat sangat diperlukan agar keputusan investasi lebih optimal.
 
 ## Business Understanding
+### Problem Statements## Business Understanding
 ### Problem Statements
+1. Bagaimana cara memprediksi harga saham berdasarkan data historis?
+2. Bagaimana efektivitas model BiLSTM dan BiGRU dalam meningkatkan akurasi prediksi harga saham?
+3. Bagaimana pengaruh berbagai fitur (seperti harga pembukaan, harga tertinggi, volume) terhadap prediksi harga saham?
+### Goals
+1. Mengembangkan model machine learning untuk memprediksi harga saham.
+2. Membandingkan performa BiLSTM dan BiGRU menggunakan metrik evaluasi yang sesuai.
+3. Mengidentifikasi fitur yang paling berpengaruh dalam peramalan harga saham.
+### Solution Statements
+1. Menggunakan Bidirectional Long Short-Term Memory (BiLSTM) dan Bidirectional Gated Recurrent Unit (BiGRU) sebagai model deep learning untuk menangkap pola dalam data time series harga saham.
+2. Melakukan hyperparameter tuning untuk meningkatkan akurasi model dengan menyesuaikan jumlah unit, dropout rate, dan optimizer.
+
 1. Bagaimana cara memprediksi harga saham berdasarkan data historis?
 2. Bagaimana efektivitas model BiLSTM dan BiGRU dalam meningkatkan akurasi prediksi harga saham?
 3. Bagaimana pengaruh berbagai fitur (seperti harga pembukaan, harga tertinggi, volume) terhadap prediksi harga saham?
@@ -80,6 +92,15 @@ Proses hypertuning dilakukan menggunakan Keras Tuner dengan metode Hyperband. Me
 - Seleksi adaptif: Model dengan performa buruk dieliminasi lebih awal, sehingga sumber daya lebih banyak dialokasikan ke model yang lebih menjanjikan.
 - Optimasi yang lebih cepat: Memungkinkan eksplorasi berbagai kombinasi hyperparameter tanpa perlu melatih semua model hingga selesai.
   
+Parameter terbaik yang diperoleh dari hasil tuning untuk model BiLSTM adalah sebagai berikut:
+
+![image](https://github.com/user-attachments/assets/b4e071d3-9606-4aad-8c4f-3556de773dd8)
+
+
+Sementara itu, parameter terbaik hasil tuning untuk model BiGRU adalah sebagai berikut:
+
+![image](https://github.com/user-attachments/assets/6950cbe0-dc58-4a90-9dae-7a0367907035)
+
 Setelah mendapatkan parameter terbaik dari hasil tuning, model final kemudian dibangun dan dilatih menggunakan parameter tersebut.
 ### Bidirectional Long Short-Term Memory (BILSTM)
 Model Long Short-Term Memory (LSTM) merupakan pembaruan dari model Recurrent 
@@ -174,8 +195,29 @@ Analisis Hasil Evaluasi:
 - MAE (Mean Absolute Error): BiGRU memiliki MAE yang lebih kecil, yang berarti model ini menghasilkan prediksi yang lebih akurat secara absolut.
 
 - R-Squared (R²): BiGRU memiliki nilai R² lebih tinggi, menunjukkan bahwa model ini lebih mampu menjelaskan variasi dalam data dibandingkan BiLSTM.
+
+### Dampak terhadap Business Understanding
+
+Model prediksi harga saham yang dikembangkan memiliki dampak signifikan terhadap pemahaman bisnis, terutama dalam pengambilan keputusan investasi. Berikut adalah beberapa aspek utama dampaknya:
+
+1. Menjawab Problem Statement dan Mencapai Goals
+
+- Model yang dikembangkan mampu memprediksi harga saham berdasarkan data historis dengan tingkat akurasi yang baik, membantu investor dalam membuat keputusan lebih tepat.
+
+- Penggunaan BiLSTM dan BiGRU menunjukkan bahwa deep learning efektif dalam memprediksi harga saham, metrik evaluasi menunjukkan bahwa BiGRU lebih optimal dengan error yang lebih rendah dan nilai R² yang lebih tinggi
+  
+- Variabel fitur Open, High, dan Low memiliki pengaruh besar terhadap variabel target Close (mendekati 1) dalam prediksi harga saham. Sementara itu, variabel fitur Volume menunjukkan korelasi yang rendah dengan variabel Close (0,40) yang menunjukkan bahwa perubahan harga tidak selalu berkaitan dengan jumlah volume perdagangan.
+
+2. Dampak dari Solusi Statement
+
+- Penggunaan BiLSTM dan BiGRU membuktikan bahwa deep learning dapat menangkap pola harga saham dengan baik, memberikan metode yang lebih canggih dibandingkan pendekatan konvensional.
+
+- Hasil tuning hyperparameter yang dilakukan berhasil meningkatkan kinerja model secara signifikan, menjadikan model lebih akurat dan andal.
+
+- Model yang dikembangkan dapat menjadi acuan bagi investor dan analis dalam pengambilan keputusan bisnis terkait investasi saham, sehingga dapat meminimalkan risiko dan memaksimalkan keuntungan.
 ## Kesimpulan
 Berdasarkan hasil evaluasi, model algoritma BiGRU dipilih sebagai model terbaik untuk memprediksi harga saham. Hal ini didasarkan pada metrik evaluasi yang menunjukkan bahwa BiGRU memiliki error yang lebih rendah (MSE, MAE, dan MAPE) serta nilai R² yang lebih tinggi dibandingkan BiLSTM. Selain itu, BiGRU lebih efisien dalam proses pelatihan dibandingkan BiLSTM, sehingga lebih optimal untuk digunakan dalam peramalan harga saham.
+
 
 ## Refrensi
 
