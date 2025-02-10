@@ -14,17 +14,7 @@ Peramalan harga saham penting karena membantu investor dan institusi keuangan da
 1. Mengembangkan model machine learning untuk memprediksi harga saham.
 2. Membandingkan performa BiLSTM dan BiGRU menggunakan metrik evaluasi yang sesuai.
 3. Mengidentifikasi fitur yang paling berpengaruh dalam peramalan harga saham.
-### Solution Statements
-1. Menggunakan Bidirectional Long Short-Term Memory (BiLSTM) dan Bidirectional Gated Recurrent Unit (BiGRU) sebagai model deep learning untuk menangkap pola dalam data time series harga saham.
-2. Melakukan hyperparameter tuning untuk meningkatkan akurasi model dengan menyesuaikan jumlah unit, dropout rate, dan optimizer.
 
-1. Bagaimana cara memprediksi harga saham berdasarkan data historis?
-2. Bagaimana efektivitas model BiLSTM dan BiGRU dalam meningkatkan akurasi prediksi harga saham?
-3. Bagaimana pengaruh berbagai fitur (seperti harga pembukaan, harga tertinggi, volume) terhadap prediksi harga saham?
-### Goals
-1. Mengembangkan model machine learning untuk memprediksi harga saham.
-2. Membandingkan performa BiLSTM dan BiGRU menggunakan metrik evaluasi yang sesuai.
-3. Mengidentifikasi fitur yang paling berpengaruh dalam peramalan harga saham.
 ### Solution Statements
 1. Menggunakan Bidirectional Long Short-Term Memory (BiLSTM) dan Bidirectional Gated Recurrent Unit (BiGRU) sebagai model deep learning untuk menangkap pola dalam data time series harga saham.
 2. Melakukan hyperparameter tuning untuk meningkatkan akurasi model dengan menyesuaikan jumlah unit, dropout rate, dan optimizer.
