@@ -5,7 +5,6 @@ Peramalan harga saham merupakan salah satu tantangan dalam dunia keuangan yang m
 Peramalan harga saham penting karena membantu investor dan institusi keuangan dalam mengambil keputusan yang lebih baik [3]. Dengan prediksi yang akurat, risiko kerugian dapat dikurangi, dan peluang keuntungan bisa dimaksimalkan. Selain itu, model prediksi yang baik dapat mempercepat dan meningkatkan efisiensi perdagangan saham. Perkembangan teknologi memungkinkan penggunaan machine learning untuk memahami pola dalam data saham yang sulit dilihat secara langsung. Oleh karena itu, pengembangan model yang lebih akurat sangat diperlukan agar keputusan investasi lebih optimal.
 
 ## Business Understanding
-### Problem Statements## Business Understanding
 ### Problem Statements
 1. Bagaimana cara memprediksi harga saham berdasarkan data historis?
 2. Bagaimana efektivitas model BiLSTM dan BiGRU dalam meningkatkan akurasi prediksi harga saham?
