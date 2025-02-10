@@ -20,7 +20,7 @@ Peramalan harga saham penting karena membantu investor dan institusi keuangan da
 
 
 ## Data Understanding
-Dataset yang digunakan dalam proyek ini merupakan dataset harga saham harian Tesla yang mencakup periode tertentu dari periode 06/29/2010 hingga 03/17/2017. Dataset ini diperoleh dari Kaggle melalui tautan berikut: https://www.kaggle.com/datasets/rpaguirre/tesla-stock-price/data
+Dataset yang digunakan dalam proyek ini merupakan dataset harga saham harian Tesla yang mencakup periode tertentu dari periode 06/29/2010 hingga 03/17/2017 yang terdiri dari 7 kolom dengan 1692 baris data. Dataset ini diperoleh dari Kaggle melalui tautan berikut: https://www.kaggle.com/datasets/rpaguirre/tesla-stock-price/data
 
 ### Variabel dalam dataset:
 - Date - Tanggal pencatatan harga saham.
